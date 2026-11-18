@@ -14,7 +14,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-xl shadow-lg p-10 text-center">
         <h1 className="text-3xl font-bold text-gray-800 mb-3">
-          Welcome to Dashboard!
+          Welcome to Dashboard!!
         </h1>
 
         <p className="text-gray-500 mb-6">
