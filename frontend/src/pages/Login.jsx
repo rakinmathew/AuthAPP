@@ -2,11 +2,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
+
+  //? Password visibility states
+    const [showPassword, setShowPassword] = useState(false);
+  
 
  const navigate = useNavigate();
 
@@ -52,6 +58,10 @@ navigate("/dashboard");
         </p>
 
         <form onSubmit={handleLogin} className="space-y-4">
+
+          <label className="block font-bold text-gray-800 mb-2">
+  Email
+</label>
           <input
             type="email"
             placeholder="Email Address"
@@ -61,14 +71,57 @@ navigate("/dashboard");
             required
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-lg border p-3 outline-none focus:border-blue-500"
-            required
-          />
+{/* 
+<div className="relative">
+  <label className="block font-bold text-gray-800 mb-2">
+  Password
+</label>
+  <input
+    type={showPassword ? "text" : "password"}
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    className="w-full rounded-lg border p-3 pr-12 outline-none focus:border-blue-500"
+    required
+  />
+
+   <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center text-gray-500 hover:text-gray-800"
+    >
+      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+    </button>
+</div> */}
+
+<div>
+  <label className="mb-2 block font-bold text-gray-800">
+    Password
+  </label>
+
+  <div className="relative">
+    <input
+      type={showPassword ? "text" : "password"}
+      placeholder="Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      className="w-full rounded-lg border p-3 pr-12 outline-none focus:border-blue-500"
+      required
+    />
+
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-3 top-1/2 -translate-y-1/2"
+    >
+      {showPassword ? (
+        <EyeOff className="h-5 w-5 text-gray-500" />
+      ) : (
+        <Eye className="h-5 w-5 text-gray-500" />
+      )}
+    </button>
+  </div>
+</div>
 
           {message && (
             <p className="text-center text-sm text-blue-600">

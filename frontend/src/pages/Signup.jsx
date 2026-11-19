@@ -1,23 +1,30 @@
-
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react"
 
 const Signup = () => {
-  //? Form states
+  // Form states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  //? UI states
+  // Password visibility states
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // UI states
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  //? Signup function
+
+const navigate = useNavigate();
+
+
+  // Signup function
   const handleSignup = async (e) => {
     e.preventDefault();
-
     setMessage("");
 
     // Check empty fields
@@ -48,20 +55,22 @@ const Signup = () => {
       setMessage(response.data.message);
 
       // Clear form after successful signup
-      setName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
+      // setName("");
+      // setEmail("");
+      // setPassword("");
+      // setConfirmPassword("");
+
+      navigate("/login");
 
     } catch (error) {
-  console.error("Signup error:", error);
+      console.error("Signup error:", error);
 
-  setMessage(
-    error.response?.data?.message ||
-    error.message ||
-    "Signup failed!"
-  );
-} finally {
+      setMessage(
+        error.response?.data?.message ||
+        error.message ||
+        "Signup failed!"
+      );
+    } finally {
       setLoading(false);
     }
   };
@@ -81,16 +90,25 @@ const Signup = () => {
         <form onSubmit={handleSignup} className="space-y-4">
 
           {/* Name */}
+
+<label className="block font-bold text-gray-800 mb-2">
+  Full Name
+</label>
+
           <input
             type="text"
             placeholder="Full Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full rounded-lg border p-3 outline-none focus:border-blue-500"
+            className="w-full rounded-lg border p-3 outline-none focus:border-blue-500 "
             required
           />
 
           {/* Email */}
+
+          <label className="block font-bold text-gray-800 mb-2">
+  Email Address
+</label>
           <input
             type="email"
             placeholder="Email Address"
@@ -101,24 +119,54 @@ const Signup = () => {
           />
 
           {/* Password */}
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-lg border p-3 outline-none focus:border-blue-500"
-            required
-          />
+
+          <label className="block font-bold text-gray-800 mb-2">
+  Password
+</label>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-lg border p-3 pr-12 outline-none focus:border-blue-500"
+              required
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+            >
+              {showPassword ? <EyeOff size={20}/> : <Eye size={20} />}
+            </button>
+          </div>
 
           {/* Confirm Password */}
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full rounded-lg border p-3 outline-none focus:border-blue-500"
-            required
-          />
+
+          <label className="block font-bold text-gray-800 mb-2">
+  Confirm Password
+</label>
+          <div className="relative">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full rounded-lg border p-3 pr-12 outline-none focus:border-blue-500"
+              required
+            />
+
+            <button
+              type="button"
+              onClick={() =>
+                setShowConfirmPassword(!showConfirmPassword)
+              }
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+            >
+              {showConfirmPassword ? <EyeOff size={20}/> : <Eye size={20} />}
+            </button>
+          </div>
 
           {/* Success / Error Message */}
           {message && (
