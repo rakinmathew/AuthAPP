@@ -37,7 +37,7 @@ const Signup = () => {
 
       // Send data to backend
       const response = await axios.post(
-        "http://localhost:5000/api/auth/signup",
+        "https://authapp-cp9y.onrender.com/api/auth/signup",
         {
           name,
           email,
@@ -54,10 +54,14 @@ const Signup = () => {
       setConfirmPassword("");
 
     } catch (error) {
-      setMessage(
-        error.response?.data?.message || "Signup failed!"
-      );
-    } finally {
+  console.error("Signup error:", error);
+
+  setMessage(
+    error.response?.data?.message ||
+    error.message ||
+    "Signup failed!"
+  );
+} finally {
       setLoading(false);
     }
   };
