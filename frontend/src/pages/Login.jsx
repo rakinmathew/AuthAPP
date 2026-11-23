@@ -50,7 +50,7 @@ navigate("/dashboard");
       <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
 
         <h1 className="mb-2 text-center text-3xl font-bold text-gray-800">
-          Welcome Back
+          Welcome Back!
         </h1>
 
         <p className="mb-6 text-center text-gray-500">
